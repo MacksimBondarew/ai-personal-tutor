@@ -1,4 +1,4 @@
-import authImage from '@/src/public/monstera-auth.jpg';
+import authImage from '@/src/public/monstera-auth-one.jpg';
 import Image from 'next/image';
 import React, { PropsWithChildren } from 'react';
 

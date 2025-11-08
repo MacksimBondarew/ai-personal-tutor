@@ -36,7 +36,7 @@ export const SignInForm = () => {
           Enter your Credentials to access your account
         </p>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <FieldGroup>
+          <FieldGroup className={'mb-10'}>
             <Controller
               name={'email'}
               control={form.control}
