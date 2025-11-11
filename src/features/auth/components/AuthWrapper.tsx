@@ -1,17 +1,23 @@
 import authImage from '@/src/public/monstera-auth-one.jpg';
 import Image from 'next/image';
 import React, { PropsWithChildren } from 'react';
+import { cn } from '@/src/shared/lib/utils';
 
-export const AuthWrapper = ({ children }: PropsWithChildren) => {
+export const AuthWrapper = ({
+  children,
+  className,
+}: PropsWithChildren<{ className?: string }>) => {
   return (
-    <div className={'grid grid-cols-2'}>
-      <div className={'flex justify-center items-center'}>{children}</div>
+    <div className={cn(className, 'flex')}>
+      <div className={'flex h-screen justify-center items-center w-screen'}>
+        {children}
+      </div>
       <Image
         src={authImage}
         alt={'authImage'}
         width={400}
         height={400}
-        className={'w-full h-screen object-cover rounded-s-4xl'}
+        className={'hidden xl:block w-full h-screen object-cover'}
         dir='ltr'
       />
     </div>

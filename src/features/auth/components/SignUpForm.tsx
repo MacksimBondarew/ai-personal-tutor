@@ -4,7 +4,7 @@ import React from 'react';
 import { AuthWrapper, FormFooter } from '@/src/features/auth/components';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SignInSchema, TypeSignInSchema } from '@/src/features/auth/schemes';
+import { SignUpSchema, TypeSignUpSchema } from '@/src/features/auth/schemes';
 import { Input } from '@/src/shared/components/ui/input';
 import { toast } from 'sonner';
 import {
@@ -15,25 +15,23 @@ import {
   FieldLabel,
 } from '@/src/shared/components/ui';
 
-export const SignInForm = () => {
-  const form = useForm<TypeSignInSchema>({
-    resolver: zodResolver(SignInSchema),
+export const SignUpForm = () => {
+  const form = useForm<TypeSignUpSchema>({
+    resolver: zodResolver(SignUpSchema),
     defaultValues: {
       email: '',
+      name: '',
       password: '',
     },
   });
-  const onSubmit = (data: TypeSignInSchema) => {
+  const onSubmit = (data: TypeSignUpSchema) => {
     toast('You have successfully logged in!');
     console.log(data);
   };
   return (
-    <AuthWrapper>
-      <div>
-        <h2 className={'font-medium text-4xl mb-1.5'}>Welcome back!</h2>
-        <p className={'font-medium text-base mb-14'}>
-          Enter your Credentials to access your account
-        </p>
+    <AuthWrapper className={'flex-row-reverse'}>
+      <div className={'sm:w-[330px]'}>
+        <h2 className={'font-medium text-4xl mb-14'}>Get Started Now</h2>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup className={'mb-10'}>
             <Controller
@@ -47,6 +45,24 @@ export const SignInForm = () => {
                     {...field}
                     aria-invalid={fieldState.invalid}
                     placeholder={'Please enter a valid email'}
+                    autoComplete={'off'}
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+            <Controller
+              name={'name'}
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel>Name</FieldLabel>
+                  <Input
+                    {...field}
+                    aria-invalid={fieldState.invalid}
+                    placeholder={'Please enter a valid name'}
                     autoComplete={'off'}
                   />
                   {fieldState.invalid && (
@@ -78,9 +94,9 @@ export const SignInForm = () => {
           <Button type={'submit'}>Submit</Button>
         </form>
         <FormFooter
-          text={'Don’t have an account?'}
-          linkText={'Sign Up'}
-          href={'/sign-up'}
+          text={'Have an account?'}
+          linkText={'Sign In'}
+          href={'/sign-in'}
         />
       </div>
     </AuthWrapper>
