@@ -1,7 +1,7 @@
-import {Button} from "@/src/shared/components/ui/button";
+import { HomePage } from '@/src/features/home/components';
 
 const Home = () => {
-    return <Button variant={"link"} className={"text-red-800 text-5xl"}>Hello World</Button>
-}
+  return <HomePage />;
+};
 
 export default Home;
