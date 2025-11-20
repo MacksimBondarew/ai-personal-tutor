@@ -1,19 +1,17 @@
 'use client';
 
 import React from 'react';
-import { AuthWrapper, FormFooter } from '@/src/features/auth/components';
-import { Controller, useForm } from 'react-hook-form';
+import {
+  AuthGroup,
+  AuthWrapper,
+  FormFooter,
+} from '@/src/features/auth/components';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SignInSchema, TypeSignInSchema } from '@/src/features/auth/schemes';
-import { Input } from '@/src/shared/components/ui/input';
-import { toast } from 'sonner';
-import {
-  Button,
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from '@/src/shared/components/ui';
+import { Button } from '@/src/shared/components/ui';
+import { useSignInMutation } from '@/src/features/auth/hooks';
+import { SignInInputs } from '@/src/features/auth/data';
 
 export const SignInForm = () => {
   const form = useForm<TypeSignInSchema>({
@@ -23,9 +21,9 @@ export const SignInForm = () => {
       password: '',
     },
   });
+  const { signIn, isLoadingSignIn } = useSignInMutation();
   const onSubmit = (data: TypeSignInSchema) => {
-    toast('You have successfully logged in!');
-    console.log(data);
+    signIn({ values: data });
   };
   return (
     <AuthWrapper>
@@ -35,46 +33,7 @@ export const SignInForm = () => {
           Enter your Credentials to access your account
         </p>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <FieldGroup className={'mb-10'}>
-            <Controller
-              name={'email'}
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel>Email</FieldLabel>
-                  <Input
-                    type={'email'}
-                    {...field}
-                    aria-invalid={fieldState.invalid}
-                    placeholder={'Please enter a valid email'}
-                    autoComplete={'off'}
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-            <Controller
-              name={'password'}
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel>Password</FieldLabel>
-                  <Input
-                    {...field}
-                    type={'password'}
-                    aria-invalid={fieldState.invalid}
-                    placeholder={'Please enter a valid password'}
-                    autoComplete={'off'}
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-          </FieldGroup>
+          <AuthGroup inputs={SignInInputs} form={form} />
           <Button type={'submit'}>Submit</Button>
         </form>
         <FormFooter
