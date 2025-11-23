@@ -2,8 +2,10 @@ import { useMutation } from '@tanstack/react-query';
 import { TypeSignUpSchema } from '@/src/features/auth/schemes';
 import { supabase } from '@/src/shared/lib/supabase';
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 export const useSignUpMutation = () => {
+  const router = useRouter();
   const { mutate: signUp, isPending: isLoadingSignUp } = useMutation({
     mutationKey: ['signUp user'],
     mutationFn: async ({ values }: { values: TypeSignUpSchema }) => {
@@ -24,6 +26,7 @@ export const useSignUpMutation = () => {
     },
     onSuccess() {
       toast('You have successfully signed up!');
+      router.push('/dashboard');
     },
     onError(error: any) {
       toast.error(error.message);

@@ -32,7 +32,9 @@ export const SignUpForm = () => {
         <h2 className={'font-medium text-4xl mb-14'}>Get Started Now</h2>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <AuthGroup inputs={SignUpInputs} form={form} />
-          <Button type={'submit'}>Submit</Button>
+          <Button isLoading={isLoadingSignUp} type={'submit'}>
+            Submit
+          </Button>
         </form>
         <FormFooter
           text={'Have an account?'}

@@ -34,7 +34,9 @@ export const SignInForm = () => {
         </p>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <AuthGroup inputs={SignInInputs} form={form} />
-          <Button type={'submit'}>Submit</Button>
+          <Button isLoading={isLoadingSignIn} type={'submit'}>
+            Submit
+          </Button>
         </form>
         <FormFooter
           text={'Don’t have an account?'}

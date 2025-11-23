@@ -12,7 +12,6 @@ export const AuthGroup = <TFieldValues extends FieldValues>({
   inputs: { name: FieldPath<TFieldValues>; label: string }[];
   form: UseFormReturn<TFieldValues>;
 }) => {
-  console.log(inputs);
   return (
     <FieldGroup className={'mb-10'}>
       {inputs.map(({ name, label }, index) => (
