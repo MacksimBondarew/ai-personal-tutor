@@ -26,7 +26,7 @@ export const useSignUpMutation = () => {
     },
     onSuccess() {
       toast('You have successfully signed up!');
-      router.push('/dashboard');
+      router.push('/profile');
     },
     onError(error: any) {
       toast.error(error.message);
