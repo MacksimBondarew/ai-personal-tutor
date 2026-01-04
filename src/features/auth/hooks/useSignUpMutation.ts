@@ -3,6 +3,7 @@ import { TypeSignUpSchema } from '@/src/features/auth/schemes';
 import { supabase } from '@/src/shared/lib/supabase';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { randomAvatar } from '@/src/shared/data';
 
 export const useSignUpMutation = () => {
   const router = useRouter();
@@ -15,7 +16,7 @@ export const useSignUpMutation = () => {
         options: {
           data: {
             name: values.name,
-            avatar: 'first test',
+            avatar: randomAvatar(),
           },
         },
       });

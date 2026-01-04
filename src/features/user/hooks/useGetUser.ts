@@ -1,19 +1,15 @@
-import { useMutation } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/src/shared/lib/supabase';
-import { toast } from 'sonner';
 
 export const useGetUser = () => {
-  const { mutate: getUser, isPending: isLoadingGetUser } = useMutation({
-    mutationKey: ['getUser'],
-    mutationFn: async () => {
-      const { data: user, error } = await supabase().auth.getUser();
+  return useQuery({
+    queryKey: ['user'],
+    queryFn: async () => {
+      const { data, error } = await supabase().auth.getUser();
       if (error) throw error;
-      return user;
+      return data.user;
     },
-    onError(error: any) {
-      toast.error(error.message);
-    },
+    retry: false,
+    throwOnError: false,
   });
-
-  return { getUser, isLoadingGetUser };
 };

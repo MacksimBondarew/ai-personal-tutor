@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {
-  AuthGroup,
+  InputsGroup,
   AuthWrapper,
   FormFooter,
 } from '@/src/features/auth/components';
@@ -33,7 +33,7 @@ export const SignInForm = () => {
           Enter your Credentials to access your account
         </p>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <AuthGroup inputs={SignInInputs} form={form} />
+          <InputsGroup inputs={SignInInputs} form={form} />
           <Button isLoading={isLoadingSignIn} type={'submit'}>
             Submit
           </Button>

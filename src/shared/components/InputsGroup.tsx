@@ -1,11 +1,11 @@
 'use client';
 
 import { FieldGroup } from '@/src/shared/components/ui';
-import { CustomInput } from '@/src/shared/components';
+import { CustomInput } from '@/src/shared/components/index';
 import React from 'react';
 import { FieldPath, FieldValues, UseFormReturn } from 'react-hook-form';
 
-export const AuthGroup = <TFieldValues extends FieldValues>({
+export const InputsGroup = <TFieldValues extends FieldValues>({
   inputs,
   form,
 }: {

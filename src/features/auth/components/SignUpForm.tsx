@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {
-  AuthGroup,
+  InputsGroup,
   AuthWrapper,
   FormFooter,
 } from '@/src/features/auth/components';
@@ -31,7 +31,7 @@ export const SignUpForm = () => {
       <div className={'sm:w-[330px]'}>
         <h2 className={'font-medium text-4xl mb-14'}>Get Started Now</h2>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <AuthGroup inputs={SignUpInputs} form={form} />
+          <InputsGroup inputs={SignUpInputs} form={form} />
           <Button isLoading={isLoadingSignUp} type={'submit'}>
             Submit
           </Button>

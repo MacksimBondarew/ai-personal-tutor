@@ -1,13 +1,8 @@
 'use client';
-import { useEffect } from 'react';
+
 import { useGetUser } from '@/src/features/user/hooks';
 
-const ProfileHeader = () => {
-  useEffect(() => {
-    const user = useGetUser();
-    console.log(user);
-  }, []);
-  return <div>Profile Header</div>;
+export const ProfileHeader = () => {
+  const { data: user } = useGetUser();
+  return <div>{user?.email ?? 'No user'}</div>;
 };
-
-export { ProfileHeader };
