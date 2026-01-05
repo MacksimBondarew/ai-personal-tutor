@@ -1,72 +1,56 @@
 'use client';
-import ProfileImage from '@/src/public/monstera-profile.png';
-import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
+
+import React from 'react';
 import { useGetUser } from '@/src/features/user/hooks';
-import { Button, Card, CardContent } from '@/src/shared/components/ui';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { InputsGroup } from '@/src/shared/components/InputsGroup';
-import React, { useEffect } from 'react';
-import { ProfileInputs } from '@/src/features/user/data';
-import { ProfileSchema, TypeProfileSchema } from '@/src/features/user/schemes';
 
 export function ProfilePage() {
-  const { data: user, isLoading: isLoadingGetUser } = useGetUser();
-  const form = useForm<TypeProfileSchema>({
-    resolver: zodResolver(ProfileSchema),
-    defaultValues: {
-      email: '',
-      name: '',
-    },
-  });
-
-  useEffect(() => {
-    if (!user) return;
-    form.reset({
-      email: user.email ?? '',
-      name: user.user_metadata?.name ?? '',
-    });
-  }, [user, form]);
+  const { data: user } = useGetUser();
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  console.log(timezone);
+  console.log(user);
   return (
-    <div
-      className={
-        'relative min-h-screen flex items-center justify-center overflow-hidden'
-      }
-    >
-      <img
-        src={ProfileImage.src}
-        alt='background'
-        className='absolute inset-0 h-full w-full object-cover -z-10'
-      />
-      <div className='absolute inset-0 bg-black/35 backdrop-blur-[2px]' />
-      <Card
-        className={
-          'bg-white relative flex flex-wrap items-center w-1/5 max-w-md rounded-3xl pt-8 pb-3 px-2 gap-0'
-        }
-      >
-        <Avatar className={'flex w-1/4 justify-center mb-4'}>
-          <AvatarImage
-            className={'rounded-full'}
-            src={user?.user_metadata.avatar?.src}
-          />
-        </Avatar>
-        <CardContent className={'w-full'}>
-          <form>
-            <InputsGroup inputs={ProfileInputs} form={form} />
-            <div className={'flex flex-wrap gap-2'}>
-              <Button isLoading={isLoadingGetUser} type={'submit'}>
-                Submit
-              </Button>
-              <Button
-                className={'bg-red-800 hover:bg-red-500'}
-                isLoading={isLoadingGetUser}
-              >
-                Logout
-              </Button>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
+    <div className='min-h-screen bg-white px-6 py-10'>
+      <div className='max-w-4xl mx-auto space-y-10'>
+        {/* Header */}
+        <div className='flex items-center gap-6'>
+          <div className='w-20 h-20 rounded-full bg-green-100 flex items-center justify-center text-2xl font-semibold text-green-700'>
+            A
+          </div>
+
+          <div>
+            <h1 className='text-2xl font-semibold text-gray-900'>Alex</h1>
+            <p className='text-sm text-gray-500'>
+              Beginner · Learning with AI Tutor
+            </p>
+          </div>
+        </div>
+
+        {/* Goal Card */}
+        <div className='rounded-2xl border border-gray-100 p-6 shadow-sm'>
+          <h2 className='text-lg font-medium text-gray-900 mb-2'>
+            Learning Goal
+          </h2>
+          <p className='text-gray-600'>
+            Become confident in programming fundamentals with daily practice.
+          </p>
+        </div>
+
+        {/* Stats */}
+        <div className='grid grid-cols-1 sm:grid-cols-3 gap-6'>
+          <Stat title='Lessons Completed' value='24' />
+          <Stat title='Current Streak' value='6 days' />
+          <Stat title='Level' value='Beginner' />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Stat({ title, value }: { title: string; value: string }) {
+  return (
+    <div className='rounded-xl border border-gray-100 p-5 text-center'>
+      <p className='text-sm text-gray-500'>{title}</p>
+      <p className='text-xl font-semibold text-green-700 mt-1'>{value}</p>
     </div>
   );
 }

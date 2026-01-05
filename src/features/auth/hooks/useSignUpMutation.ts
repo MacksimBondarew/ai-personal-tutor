@@ -10,6 +10,7 @@ export const useSignUpMutation = () => {
   const { mutate: signUp, isPending: isLoadingSignUp } = useMutation({
     mutationKey: ['signUp user'],
     mutationFn: async ({ values }: { values: TypeSignUpSchema }) => {
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       const { data, error } = await supabase().auth.signUp({
         email: values.email,
         password: values.password,
@@ -17,6 +18,7 @@ export const useSignUpMutation = () => {
           data: {
             name: values.name,
             avatar: randomAvatar(),
+            timezone: timezone,
           },
         },
       });
