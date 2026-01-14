@@ -1,1 +1,1 @@
-export * from './profileInputs';
+export * from './profileFields.data';

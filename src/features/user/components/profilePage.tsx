@@ -1,65 +1,62 @@
 'use client';
 
 import React from 'react';
-import { Avatar, AvatarImage, Button } from '@/src/shared/components/ui';
+import { Spinner } from '@/src/shared/components/ui/spinner';
+import { ProfileHeader } from '@/src/features/user/components/profileHeader';
+import { ProfileField } from '@/src/features/user/components/ProfileField';
 import { useGetUser, useProfile } from '@/src/features/user/hooks';
-import { LogOutIcon } from 'lucide-react';
+import { useProfileMutation } from '@/src/features/user/hooks/useProfileMutation';
+
+import type {
+  EditableProfileField,
+  ProfileFieldUpdate,
+  ProfileType,
+} from '@/src/shared/types';
+import { profileFields } from '@/src/features/user/data';
 
 export function ProfilePage() {
-  const { data: user } = useGetUser();
-  const { data: profile } = useProfile(user?.id);
-  console.log(profile);
+  const { data: user, isLoading: isLoadingUser } = useGetUser();
+  const { data: profile, isLoading: isLoadingProfile } = useProfile(user?.id);
+
+  const { updateProfileField } = useProfileMutation();
+
+  const onSubmit = React.useCallback(
+    ({ field, value }: ProfileFieldUpdate) => {
+      updateProfileField({ field, value });
+    },
+    [updateProfileField],
+  );
+
+  if (isLoadingUser || isLoadingProfile) {
+    return (
+      <Spinner className='w-14 h-14 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' />
+    );
+  }
+
+  const getFieldValue = (p: ProfileType, field: EditableProfileField) => {
+    const v = p[field];
+    return typeof v === 'string' ? v : (v ?? null);
+  };
+
   return (
     <div className='min-h-screen bg-white px-6 py-10'>
       <div className='max-w-4xl mx-auto space-y-7'>
-        {/* Header */}
-        <div className={'flex justify-between items-center'}>
-          <div className='flex items-center gap-6'>
-            <Avatar className={'h-16 w-16'}>
-              <AvatarImage src={user?.user_metadata?.avatar?.src} />
-            </Avatar>
+        <ProfileHeader user={user} profile={profile} />
 
-            <div>
-              <h1 className='text-2xl font-semibold text-gray-900'>
-                {profile?.name}
-              </h1>
-              <p className='text-sm text-gray-500'>
-                {profile?.level} · Learning with AI Tutor
-              </p>
-            </div>
-          </div>
-          <Button
-            variant='outline'
-            className='inline-flex items-center space-x-2 hover:bg-red-600 hover:text-white'
-          >
-            <LogOutIcon className='h-4 w-4' />
-            <span>Logout</span>
-          </Button>
-        </div>
-        <div className='rounded-2xl border border-gray-100 p-6 shadow-sm'>
-          <h2 className='text-lg font-medium text-gray-900 mb-2'>My bio</h2>
-          <p className='text-gray-600'>
-            {!profile?.bio ? 'Please enter your bio' : profile?.bio}
-          </p>
-        </div>
-        <div className='rounded-2xl border border-gray-100 p-6 shadow-sm'>
-          <h2 className='text-lg font-medium text-gray-900 mb-2'>
-            Learning Goal
-          </h2>
-          <p className='text-gray-600'>
-            {!profile?.goal ? 'Please enter your goal' : profile?.goal}
-          </p>
+        {/* ✅ Поля профілю */}
+        <div className='space-y-4'>
+          {profileFields.map((block) => (
+            <ProfileField
+              key={block.field}
+              title={block.title}
+              field={block.field}
+              emptyText={block.emptyText}
+              value={getFieldValue(profile, block.field)}
+              onSubmit={onSubmit}
+            />
+          ))}
         </div>
       </div>
-    </div>
-  );
-}
-
-function Stat({ title, value }: { title: string; value: string }) {
-  return (
-    <div className='rounded-xl border border-gray-100 p-5 text-center'>
-      <p className='text-sm text-gray-500'>{title}</p>
-      <p className='text-xl font-semibold text-green-700 mt-1'>{value}</p>
     </div>
   );
 }
