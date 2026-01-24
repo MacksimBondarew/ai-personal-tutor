@@ -1,4 +1,3 @@
-// hooks/useProfileMutation.ts
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/src/shared/lib/supabase';
 import { toast } from 'sonner';
