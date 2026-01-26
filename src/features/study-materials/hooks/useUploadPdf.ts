@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/src/shared/lib/supabase';
 import { buildPdfPath } from '@/src/shared/lib/storagePath';
-import { useGetUser } from '@/src/features/user/hooks';
 import { toast } from 'sonner';
 
 export const useUploadPdf = () => {

@@ -7,9 +7,15 @@ type DocumentItemProps = {
     created_at: string;
     status: string;
   };
+  onGenerate: (documentId: string) => void;
+  isGenerating?: boolean;
 };
 
-export function DocumentItem({ document }: DocumentItemProps) {
+export function DocumentItem({
+  document,
+  onGenerate,
+  isGenerating,
+}: DocumentItemProps) {
   return (
     <div className='flex items-start justify-between gap-4'>
       <div>
@@ -21,6 +27,14 @@ export function DocumentItem({ document }: DocumentItemProps) {
 
       <div className='flex items-center gap-3'>
         <DocumentStatus status={document.status} />
+        <button
+          type='button'
+          className='text-sm px-3 py-1 rounded border hover:bg-gray-50 disabled:opacity-50'
+          onClick={() => onGenerate(document.id)}
+          disabled={isGenerating || document.status === 'processing'}
+        >
+          {isGenerating ? 'Generating…' : 'Generate quiz'}
+        </button>
       </div>
     </div>
   );

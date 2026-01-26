@@ -42,8 +42,6 @@ export function ProfilePage() {
     <div className='min-h-screen bg-white px-6 py-10'>
       <div className='max-w-4xl mx-auto space-y-7'>
         <ProfileHeader user={user} profile={profile} />
-
-        {/* ✅ Поля профілю */}
         <div className='space-y-4'>
           {profileFields.map((block) => (
             <ProfileField

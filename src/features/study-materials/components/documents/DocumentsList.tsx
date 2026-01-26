@@ -7,6 +7,7 @@ import { DocumentItem } from '@/src/features/study-materials/components/document
 
 export function DocumentsList() {
   const { data, isLoading, error } = useDocuments();
+  const { mutate: generate, isPending } = useGenerateStudySet();
 
   if (isLoading) {
     return <div className='text-sm text-gray-600'>Loading documents…</div>;
@@ -23,7 +24,12 @@ export function DocumentsList() {
   return (
     <div>
       {data.map((doc) => (
-        <DocumentItem key={doc.id} document={doc} />
+        <DocumentItem
+          key={doc.id}
+          document={doc}
+          onGenerate={(id) => generate(id)}
+          isGenerating={isPending}
+        />
       ))}
     </div>
   );
