@@ -89,6 +89,11 @@ ${text}
       })
       .select()
       .single();
+    await supabase
+      .from('documents')
+      .update({ status: 'ready', last_study_set_id: set.id })
+      .eq('id', materialId)
+      .eq('user_id', user.id);
 
     if (setError || !set)
       return bad(setError?.message ?? 'Failed to create set', 500);
