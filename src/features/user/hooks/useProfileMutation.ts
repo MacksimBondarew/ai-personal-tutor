@@ -24,12 +24,7 @@ export const useProfileMutation = () => {
         updated_at: new Date().toISOString(),
       };
 
-      const { error } = await supabase()
-        .from('profiles')
-        .update(patch)
-        .eq('id', user.id);
-
-      if (error) throw error;
+      await supabase().from('profiles').update(patch).eq('id', user.id);
 
       return { field, value: normalized };
     },

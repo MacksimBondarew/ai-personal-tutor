@@ -1,13 +1,9 @@
-import {
-  useDocuments,
-  useGenerateStudySet,
-} from '@/src/features/study-materials/hooks';
+import { useDocuments } from '@/src/features/study-materials/hooks';
 import { DocumentsListEmpty } from '@/src/features/study-materials/components/documents/Subcomponents';
 import { DocumentItem } from '@/src/features/study-materials/components/documents/DocumentItem';
 
 export function DocumentsList() {
   const { data, isLoading, error } = useDocuments();
-  const { mutate: generate, isPending } = useGenerateStudySet();
 
   if (isLoading) {
     return <div className='text-sm text-gray-600'>Loading documents…</div>;
@@ -24,12 +20,7 @@ export function DocumentsList() {
   return (
     <div>
       {data.map((doc) => (
-        <DocumentItem
-          key={doc.id}
-          document={doc}
-          onGenerate={(id) => generate(id)}
-          isGenerating={isPending}
-        />
+        <DocumentItem key={doc.id} document={doc} />
       ))}
     </div>
   );

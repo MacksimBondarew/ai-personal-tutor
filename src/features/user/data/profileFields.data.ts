@@ -11,8 +11,8 @@ export const profileFields = [
     field: 'study_goal',
     emptyText: 'Please enter your goal',
   },
-] as const satisfies ReadonlyArray<{
+] as const satisfies {
   title: string;
   emptyText: string;
   field: keyof ProfileType;
-}>;
+}[];

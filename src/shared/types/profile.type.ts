@@ -1,5 +1,3 @@
-import { TypeProfileSchema } from '@/src/features/user/schemes';
-
 export interface ProfileType {
   id: string;
   name: string | null;
@@ -16,7 +14,7 @@ export interface ProfileType {
 }
 
 export type EditableProfileField = keyof Pick<
-  TypeProfileSchema,
+  ProfileType,
   'name' | 'bio' | 'study_goal'
 >;
 
