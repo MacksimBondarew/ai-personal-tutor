@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { UploadCard } from '@/src/features/study-materials/components/upload';
 import { DocumentsList } from '@/src/features/study-materials/components/documents/DocumentsList';
 

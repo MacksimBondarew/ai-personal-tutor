@@ -3,25 +3,26 @@ import { supabase } from '@/src/shared/lib/supabase';
 import { buildPdfPath } from '@/src/shared/lib/storagePath';
 import { toast } from 'sonner';
 
-export const useUploadPdf = () => {
+export const useUpload = () => {
   const qc = useQueryClient();
-
-  return useMutation({
+  const { mutate: uploadPdf, isPending: isLoadingUpload } = useMutation({
     mutationKey: ['upload-pdf'],
-    mutationFn: async ({ file }: { file: File }) => {
+    mutationFn: async (file: File) => {
       const { data: userData } = await supabase().auth.getUser();
       const user = userData.user;
       if (!user) throw new Error('Not authenticated');
+
       const docId = crypto.randomUUID();
       const storagePath = buildPdfPath(user.id, docId);
-      const { error: uploadError } = await supabase()
+
+      await supabase()
         .storage.from('pdfs')
         .upload(storagePath, file, {
           contentType: file.type || 'application/pdf',
           upsert: false,
         });
-      if (uploadError) throw uploadError;
-      const { error: insertError } = await supabase()
+
+      await supabase()
         .from('documents')
         .insert({
           id: docId,
@@ -33,16 +34,16 @@ export const useUploadPdf = () => {
           mime_type: file.type || 'application/pdf',
           status: 'uploaded',
         });
-
-      if (insertError) throw insertError;
-
       return { id: docId, storage_path: storagePath };
     },
+
     onSuccess: async () => {
+      toast.success('Upload successful');
       await qc.invalidateQueries({ queryKey: ['documents'] });
     },
     onError(error: any) {
       toast.error(error.message);
     },
   });
+  return { uploadPdf, isLoadingUpload };
 };

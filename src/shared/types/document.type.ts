@@ -1,4 +1,4 @@
-export type DocumentRow = {
+export type Document = {
   id: string;
   user_id: string;
   title: string;
@@ -9,4 +9,5 @@ export type DocumentRow = {
   file_name: string | null;
   file_size: number | null;
   mime_type: string | null;
+  last_study_set_id?: string | null;
 };

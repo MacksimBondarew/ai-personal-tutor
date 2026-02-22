@@ -1,11 +1,7 @@
 import HomePage from '@/src/features/study-materials/components/Homepage';
 
 const Home = () => {
-  return (
-    <div>
-      <HomePage />
-    </div>
-  );
+  return <HomePage />;
 };
 
 export default Home;

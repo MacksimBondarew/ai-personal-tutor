@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import { useState } from 'react';
 import { Pencil, Check } from 'lucide-react';
 import { EditableProfileField } from '@/src/shared/types';
 import { useProfileMutation } from '@/src/features/user/hooks';
@@ -17,8 +17,8 @@ export function ProfileField({
 }) {
   const { updateProfileField } = useProfileMutation();
 
-  const [isEditing, setIsEditing] = React.useState(false);
-  const [text, setText] = React.useState(value ?? '');
+  const [isEditing, setIsEditing] = useState(false);
+  const [text, setText] = useState(value ?? '');
 
   const handleSave = () => {
     updateProfileField({ field, value: text });

@@ -1,27 +1,19 @@
 import { useDocuments } from '@/src/features/study-materials/hooks';
-import { DocumentsListEmpty } from '@/src/features/study-materials/components/documents/Subcomponents';
 import { DocumentItem } from '@/src/features/study-materials/components/documents/DocumentItem';
+import { DocumentsListEmpty } from '@/src/features/study-materials/components/documents';
 
 export function DocumentsList() {
-  const { data, isLoading, error } = useDocuments();
+  const { data, isLoading } = useDocuments();
 
-  if (isLoading) {
-    return <div className='text-sm text-gray-600'>Loading documents…</div>;
-  }
-
-  if (error) {
-    return <div className='text-sm text-red-600'>Failed to load documents</div>;
-  }
-
-  if (!data?.length) {
-    return <DocumentsListEmpty />;
-  }
-
-  return (
-    <div>
+  return isLoading ? (
+    <div className='text-sm text-gray-600'>Loading documents…</div>
+  ) : !data?.length ? (
+    <DocumentsListEmpty />
+  ) : (
+    <ul>
       {data.map((doc) => (
         <DocumentItem key={doc.id} document={doc} />
       ))}
-    </div>
+    </ul>
   );
 }

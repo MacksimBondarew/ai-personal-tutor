@@ -10,7 +10,6 @@ import {
   FieldValues,
   UseFormReturn,
 } from 'react-hook-form';
-import React from 'react';
 
 export const CustomInput = <
   TFieldValues extends FieldValues,

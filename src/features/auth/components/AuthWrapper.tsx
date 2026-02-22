@@ -1,6 +1,6 @@
 import authImage from '@/src/public/monstera-auth.jpg';
 import Image from 'next/image';
-import React, { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 import { cn } from '@/src/shared/lib/utils';
 
 export const AuthWrapper = ({

@@ -1,39 +1,21 @@
 'use client';
 
-import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useGenerateStudySet } from '@/src/features/study-materials/hooks/useGenerateStudySet';
-import { DocumentStatus } from '@/src/features/study-materials/components/documents/Subcomponents';
+import { DocumentStatus } from '@/src/features/study-materials/components/documents';
+import { Document } from '@/src/shared/types';
 
-type Document = {
-  id: string;
-  title: string;
-  created_at: string;
-  status: 'uploaded' | 'processing' | 'ready' | 'failed';
-  last_study_set_id?: string | null;
-};
-
-type Props = { document: Document };
-
-export function DocumentItem({ document }: Props) {
+export function DocumentItem({ document }: { document: Document }) {
   const router = useRouter();
-  const { mutateAsync, isPending } = useGenerateStudySet();
-
-  const canGenerate =
-    document.status === 'uploaded' || document.status === 'failed';
-  const isProcessing = document.status === 'processing';
+  const { generateStudySet, isLoadingGenerateStudySet } = useGenerateStudySet();
 
   const onGenerate = async () => {
-    const res = await mutateAsync(document.id);
+    const res = await generateStudySet(document.id);
     router.push(`/quiz/${res.studySetId}`);
   };
 
-  const onOpenQuiz = () => {
-    router.push(`/quiz/${document.last_study_set_id}`);
-  };
-
   return (
-    <div className='flex items-start justify-between gap-4'>
+    <li className='flex items-start justify-between gap-4'>
       <div>
         <div className='font-medium text-gray-900'>{document.title}</div>
         <div className='text-xs text-gray-500'>
@@ -44,34 +26,23 @@ export function DocumentItem({ document }: Props) {
       <div className='flex items-center gap-2'>
         <DocumentStatus status={document.status} />
 
-        {canGenerate ? (
+        {document.status === 'uploaded' || document.status === 'failed' ? (
           <button
             className='text-sm px-3 py-1 rounded border hover:bg-gray-50 disabled:opacity-50'
-            disabled={isPending}
+            disabled={isLoadingGenerateStudySet}
             onClick={onGenerate}
           >
-            {isPending ? 'Generating…' : 'Generate quiz'}
+            {isLoadingGenerateStudySet ? 'Generating…' : 'Generate quiz'}
           </button>
-        ) : null}
-
-        {isProcessing ? (
-          <button
-            className='text-sm px-3 py-1 rounded border opacity-60 cursor-not-allowed'
-            disabled
-          >
-            Generating…
-          </button>
-        ) : null}
-
-        {document.status === 'ready' ? (
+        ) : (
           <button
             className='text-sm px-3 py-1 rounded border hover:bg-gray-50'
-            onClick={onOpenQuiz}
+            onClick={() => router.push(`/quiz/${document.last_study_set_id}`)}
           >
             Open quiz
           </button>
-        ) : null}
+        )}
       </div>
-    </div>
+    </li>
   );
 }
