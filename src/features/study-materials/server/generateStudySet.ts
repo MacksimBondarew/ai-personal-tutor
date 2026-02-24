@@ -7,6 +7,7 @@ import {
   downloadPdfOrThrow,
   createStudySetWithItemsOrThrow,
   markDocumentReady,
+  extractPdfTextOrThrow,
 } from '@/src/features/study-materials/server';
 
 export const generateStudySet = async (documentId: string) => {
@@ -21,7 +22,7 @@ export const generateStudySet = async (documentId: string) => {
 
   const file = await downloadPdfOrThrow(supabase, doc.storage_path);
 
-  const text = 'PDF TEXT HERE';
+  const text = await extractPdfTextOrThrow(file);
 
   const quiz = await generateQuizFromTextOrThrow(text);
 

@@ -6,3 +6,4 @@ export * from './downloadPdfOrThrow';
 export * from './createStudySetWithItemsOrThrow';
 export * from './markDocumentReady';
 export * from './prompt';
+export * from './extractPdfTextOrThrow';
