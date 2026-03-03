@@ -11,14 +11,6 @@ export default function HomePage() {
           <UploadCard />
           <DocumentsList />
         </div>
-
-        <div className='rounded-2xl border border-gray-100 p-6 shadow-sm'>
-          <h2 className='text-lg font-medium text-gray-900 mb-2'>Progress</h2>
-          <p className='text-sm text-gray-600'>
-            Next step: connect your dashboard widgets here (streak, avg score,
-            last attempts).
-          </p>
-        </div>
       </div>
     </div>
   );

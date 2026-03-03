@@ -8,14 +8,20 @@ export function useQuiz(items?: Item[]) {
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [finished, setFinished] = useState(false);
+  const [startedAt, setStartedAt] = useState<number | null>(null);
+  const [finishedAt, setFinishedAt] = useState<number | null>(null);
 
   const select = (itemId: string, option: string) =>
     setAnswers((p) => ({ ...p, [itemId]: option }));
 
   const next = () => {
     if (!items || items.length === 0) return;
+    if (startedAt === null) setStartedAt(Date.now());
     if (index < items.length - 1) setIndex((i) => i + 1);
-    else setFinished(true);
+    else {
+      setFinished(true);
+      if (finishedAt === null) setFinishedAt(Date.now());
+    }
   };
 
   const score = useMemo(() => {
@@ -26,5 +32,14 @@ export function useQuiz(items?: Item[]) {
     }, 0);
   }, [items, answers]);
 
-  return { index, answers, finished, select, next, score };
+  return {
+    index,
+    answers,
+    finished,
+    select,
+    next,
+    score,
+    startedAt,
+    finishedAt,
+  };
 }

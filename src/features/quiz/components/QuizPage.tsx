@@ -1,17 +1,18 @@
 'use client';
 
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useStudySet } from '@/src/features/study-materials/hooks/useStudySet';
 import { QuizResult } from './QuizResult';
 import { QuizQuestionCard } from './QuizQuestionCard';
 import { useQuiz } from '@/src/features/quiz/hooks/useQuiz';
+import { useAttemptResultMutation } from '@/src/features/quiz/hooks/useAttemptResult';
 
 export default function QuizPage() {
   const { studySetId } = useParams<{ studySetId: string }>();
-  const router = useRouter();
   const { data } = useStudySet(studySetId);
 
   const quiz = useQuiz(data?.items);
+  const { attemptResult } = useAttemptResultMutation();
 
   if (!data) return null;
 
@@ -23,7 +24,15 @@ export default function QuizPage() {
         title={set.title}
         score={quiz.score}
         total={items.length}
-        onBackAction={() => router.push('/home')}
+        onBackAction={() =>
+          attemptResult({
+            studySetId,
+            correct: quiz.score,
+            total: items.length,
+            startedAt: quiz.startedAt,
+            finishedAt: quiz.finishedAt,
+          })
+        }
       />
     );
   }
