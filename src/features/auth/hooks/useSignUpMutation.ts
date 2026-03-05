@@ -29,7 +29,7 @@ export const useSignUpMutation = () => {
     },
     onSuccess() {
       toast('You have successfully signed up!');
-      router.push('/home');
+      router.push('/upload');
     },
     onError(error: any) {
       toast.error(error.message);

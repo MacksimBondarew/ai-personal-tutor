@@ -43,7 +43,7 @@ export const useAttemptResultMutation = () => {
       },
       onSuccess() {
         toast('You have successfully finished quiz!');
-        router.push('/home');
+        router.push('/upload');
       },
       onError(error: any) {
         toast.error(error.message);

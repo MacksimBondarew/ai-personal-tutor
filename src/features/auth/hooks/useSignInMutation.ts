@@ -19,7 +19,7 @@ export const useSignInMutation = () => {
     },
     onSuccess() {
       toast('You have successfully signed in!');
-      router.push('/home');
+      router.push('/upload');
     },
     onError(error: any) {
       toast.error(error.message);

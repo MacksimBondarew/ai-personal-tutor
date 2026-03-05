@@ -36,7 +36,7 @@ export async function updateSession(request: NextRequest) {
     request.nextUrl.pathname.startsWith('/sign-up');
 
   if (isAuthPage && user) {
-    return NextResponse.redirect(new URL('/home', request.url));
+    return NextResponse.redirect(new URL('/upload', request.url));
   }
 
   if (!isAuthPage && !user) {

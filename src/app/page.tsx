@@ -19,9 +19,7 @@ const Home = () => {
             lessons, instant feedback, and 24/7 support tailored to your unique
             learning style.
           </p>
-          <Button onClick={() => router.push('/sign-up')}>
-            Start Learning
-          </Button>
+          <Button onClick={() => router.push('/upload')}>Start Learning</Button>
         </div>
       </div>
       <Image className={'h-screen w-full'} src={homeImage} alt={'monstera'} />
