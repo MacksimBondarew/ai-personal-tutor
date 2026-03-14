@@ -1,5 +1,7 @@
 'use client';
 
+import { Button } from '@/src/shared/components/ui';
+
 type UploadCardHeaderProps = {
   isLoadingUpload: boolean;
   onPickAction: () => void;
@@ -11,17 +13,17 @@ export function UploadCardHeader({
 }: UploadCardHeaderProps) {
   return (
     <div className='flex flex-col gap-2'>
-      <div className='flex items-center justify-between'>
+      <div className='flex flex-wrap gap-2 items-center justify-between'>
         <h2 className='text-lg font-medium text-gray-900'>Upload PDF</h2>
 
-        <button
+        <Button
           type='button'
           onClick={onPickAction}
-          className='px-3 py-2 rounded-lg border hover:bg-gray-50 disabled:opacity-50'
-          disabled={isLoadingUpload}
+          isLoading={isLoadingUpload}
+          className='max-w-[200px]'
         >
-          {isLoadingUpload ? 'Uploading…' : 'Choose file'}
-        </button>
+          Choose file
+        </Button>
       </div>
 
       <p className='text-sm text-gray-500'>

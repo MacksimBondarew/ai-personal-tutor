@@ -4,44 +4,55 @@ import { useRouter } from 'next/navigation';
 import { useGenerateStudySet } from '@/src/features/study-materials/hooks/useGenerateStudySet';
 import { DocumentStatus } from '@/src/features/study-materials/components/documents';
 import { Document } from '@/src/shared/types';
+import { Button } from '@/src/shared/components/ui';
 
 export function DocumentItem({ document }: { document: Document }) {
   const router = useRouter();
   const { generateStudySet, isLoadingGenerateStudySet } = useGenerateStudySet();
 
-  const onGenerate = async () => {
-    const res = await generateStudySet(document.id);
-    router.push(`/quiz/${res.studySetId}`);
-  };
+  const isGenerateAction =
+    document.status === 'uploaded' || document.status === 'failed';
 
   return (
-    <li className='flex items-start justify-between gap-4'>
-      <div>
-        <div className='font-medium text-gray-900'>{document.title}</div>
-        <div className='text-xs text-gray-500'>
-          {new Date(document.created_at).toLocaleString()}
+    <li className='rounded-2xl w-full border border-gray-200 bg-white px-4 py-4 sm:px-5'>
+      <div className='flex items-center justify-between gap-4'>
+        <div className='min-w-0 flex-1'>
+          <div className='truncate text-base font-semibold text-slate-900'>
+            {document.title}
+          </div>
+          <div className='mt-1 text-xs text-slate-500'>
+            {new Date(document.created_at).toLocaleString([], {
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
+          </div>
         </div>
-      </div>
 
-      <div className='flex items-center gap-2'>
-        <DocumentStatus status={document.status} />
+        <div className='flex shrink-0 items-center justify-end gap-3'>
+          <div className='w-[80px] flex justify-center'>
+            <DocumentStatus status={document.status} />
+          </div>
 
-        {document.status === 'uploaded' || document.status === 'failed' ? (
-          <button
-            className='text-sm px-3 py-1 rounded border hover:bg-gray-50 disabled:opacity-50'
-            disabled={isLoadingGenerateStudySet}
-            onClick={onGenerate}
-          >
-            {isLoadingGenerateStudySet ? 'Generating…' : 'Generate quiz'}
-          </button>
-        ) : (
-          <button
-            className='text-sm px-3 py-1 rounded border hover:bg-gray-50'
-            onClick={() => router.push(`/quiz/${document.last_study_set_id}`)}
-          >
-            Open quiz
-          </button>
-        )}
+          {isGenerateAction ? (
+            <Button
+              className='w-[124px] justify-center'
+              disabled={isLoadingGenerateStudySet}
+              onClick={async () => await generateStudySet(document.id)}
+            >
+              {isLoadingGenerateStudySet ? 'Generating…' : 'Generate quiz'}
+            </Button>
+          ) : (
+            <Button
+              className='w-[124px] justify-center'
+              onClick={() => router.push(`/quiz/${document.last_study_set_id}`)}
+            >
+              Open quiz
+            </Button>
+          )}
+        </div>
       </div>
     </li>
   );

@@ -1,7 +1,9 @@
 export function DocumentsListEmpty() {
   return (
-    <div className='text-sm text-gray-600'>
-      No documents yet. Upload your first PDF.
+    <div className='flex justify-center items-center'>
+      <span className='text-lg text-green-700'>
+        No documents yet. Upload your first PDF.
+      </span>
     </div>
   );
 }

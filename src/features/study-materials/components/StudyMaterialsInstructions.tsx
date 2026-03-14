@@ -1,6 +1,6 @@
 function StudyMaterialsInstructions() {
   return (
-    <div className='rounded-xl border border-gray-100 p-4 bg-gray-50 text-sm text-gray-700 space-y-2'>
+    <div className='rounded-xl hidden border border-gray-100 p-4 bg-gray-50 text-sm text-gray-700 sm:block space-y-2'>
       <p className='font-medium text-gray-900'>How it works</p>
 
       <ol className='list-decimal list-inside space-y-1'>

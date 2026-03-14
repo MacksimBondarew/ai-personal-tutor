@@ -16,7 +16,7 @@ export function UploadCard() {
   };
 
   return (
-    <div className='rounded-2xl border border-gray-100 p-6 shadow-sm space-y-3'>
+    <div className='rounded-2xl border sm:w-1/2 md:w-full border-gray-100 p-6 shadow-sm space-y-3'>
       <UploadCardHeader
         isLoadingUpload={isLoadingUpload}
         onPickAction={onPick}
