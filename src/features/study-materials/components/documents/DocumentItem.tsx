@@ -14,9 +14,9 @@ export function DocumentItem({ document }: { document: Document }) {
     document.status === 'uploaded' || document.status === 'failed';
 
   return (
-    <li className='rounded-2xl w-full border border-gray-200 bg-white px-4 py-4 sm:px-5'>
-      <div className='flex items-center justify-between gap-4'>
-        <div className='min-w-0 flex-1'>
+    <li className='w-full rounded-2xl border border-gray-200 bg-white px-4 py-4 sm:px-5'>
+      <div className='grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4'>
+        <div className='min-w-0 overflow-hidden'>
           <div className='truncate text-base font-semibold text-slate-900'>
             {document.title}
           </div>
@@ -31,14 +31,15 @@ export function DocumentItem({ document }: { document: Document }) {
           </div>
         </div>
 
-        <div className='flex shrink-0 items-center justify-end gap-3'>
-          <div className='w-[80px] flex justify-center'>
+        <div className='flex items-center justify-end gap-3'>
+          <div className='flex justify-center sm:w-[80px]'>
             <DocumentStatus status={document.status} />
           </div>
 
           {isGenerateAction ? (
             <Button
-              className='w-[124px] justify-center'
+              className='justify-center sm:w-[124px]'
+              variant='link'
               disabled={isLoadingGenerateStudySet}
               onClick={async () => await generateStudySet(document.id)}
             >
@@ -46,10 +47,14 @@ export function DocumentItem({ document }: { document: Document }) {
             </Button>
           ) : (
             <Button
-              className='w-[124px] justify-center'
+              className='justify-center gap-1 group sm:w-[124px]'
+              variant='link'
               onClick={() => router.push(`/quiz/${document.last_study_set_id}`)}
             >
               Open quiz
+              <span className='transition-transform duration-200 group-hover:translate-x-0.5 group-hover:scale-130'>
+                →
+              </span>
             </Button>
           )}
         </div>
