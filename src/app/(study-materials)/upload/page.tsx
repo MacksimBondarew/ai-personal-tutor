@@ -1,7 +1,13 @@
 import Uploadpage from '@/src/features/study-materials/components/UploadPage';
+import { Header } from '@/src/shared/components/header/Header';
 
 const Upload = () => {
-  return <Uploadpage />;
+  return (
+    <>
+      <Header />
+      <Uploadpage />
+    </>
+  );
 };
 
 export default Upload;

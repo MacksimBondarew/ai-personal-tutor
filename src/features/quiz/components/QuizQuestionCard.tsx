@@ -1,5 +1,7 @@
 'use client';
 
+import { Button } from '@/src/shared/components/ui';
+
 export function QuizQuestionCard(props: {
   title: string;
   index: number;
@@ -26,8 +28,10 @@ export function QuizQuestionCard(props: {
   return (
     <div className='min-h-screen bg-white px-6 py-10'>
       <div className='max-w-2xl mx-auto space-y-6'>
-        <div className='flex items-center justify-between'>
-          <h1 className='text-xl font-semibold text-gray-900'>{title}</h1>
+        <div className='grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2'>
+          <h1 className='text-xl font-semibold text-gray-900 truncate'>
+            {title}
+          </h1>
           <div className='text-sm text-gray-500'>
             {index + 1} / {total}
           </div>
@@ -43,7 +47,7 @@ export function QuizQuestionCard(props: {
                 type='button'
                 onClick={() => onPickAction(opt)}
                 className={[
-                  'w-full text-left px-4 py-3 rounded-xl border',
+                  'w-full text-left px-4 py-3 rounded-xl border cursor-pointer hover:scale-101 transition-all',
                   picked === opt
                     ? 'border-gray-900'
                     : 'border-gray-200 hover:bg-gray-50',
@@ -55,14 +59,15 @@ export function QuizQuestionCard(props: {
           </div>
 
           <div className='flex justify-end'>
-            <button
+            <Button
               type='button'
               onClick={onNextAction}
               disabled={!picked}
-              className='px-4 py-2 rounded-lg border hover:bg-gray-50 disabled:opacity-50'
+              variant='link'
+              className={'hover:bg-black hover:text-white'}
             >
               {isLast ? 'Finish' : 'Next'}
-            </button>
+            </Button>
           </div>
         </div>
       </div>

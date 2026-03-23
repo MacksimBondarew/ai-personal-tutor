@@ -1,10 +1,9 @@
 'use client';
 
-import React from 'react';
-import { ProfileHeader, ProfileField } from '@/src/features/user/components';
+import { ProfileHeader } from './ProfileHeader/ProfileHeader';
+import { ProfileField } from './ProfileField/ProfileField';
 import { profileFields } from '@/src/features/user/data';
 import { getProfileFieldValue } from '@/src/shared/lib';
-
 import type { ProfileType } from '@/src/shared/types';
 
 export function ProfileView({
@@ -15,9 +14,10 @@ export function ProfileView({
   profile: ProfileType;
 }) {
   return (
-    <div className='min-h-screen bg-white px-6 py-10'>
-      <div className='max-w-4xl mx-auto space-y-7'>
+    <div className='min-h-screen bg-slate-50 px-4 py-6 sm:px-6 sm:py-8'>
+      <div className='mx-auto max-w-4xl space-y-5'>
         <ProfileHeader user={user} profile={profile} />
+
         <div className='space-y-4'>
           {profileFields.map((block) => (
             <ProfileField

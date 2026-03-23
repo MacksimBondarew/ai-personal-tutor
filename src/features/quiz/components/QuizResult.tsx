@@ -1,31 +1,31 @@
 'use client';
 
-export function QuizResult(props: {
+import { ResultStats } from './ResultStats';
+import { ProgressBar } from './ProgressBar';
+import { ResultMessage } from './ResultMessage';
+import { ResultActions } from './ResultActions';
+import { ResultHeader } from '@/src/features/quiz/components/ResultHandler';
+
+type Props = {
   title: string;
   score: number;
   total: number;
   onBackAction: () => void;
-}) {
-  const { title, score, total, onBackAction } = props;
+};
+
+export function QuizResult({ title, score, total, onBackAction }: Props) {
+  const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
 
   return (
-    <div className='min-h-screen bg-white px-6 py-10'>
-      <div className='max-w-2xl mx-auto space-y-4'>
-        <h1 className='text-2xl font-semibold text-gray-900'>{title}</h1>
-
-        <div className='rounded-2xl border border-gray-100 p-6 shadow-sm'>
-          <div className='text-lg font-medium text-gray-900'>Result</div>
-          <div className='mt-2 text-gray-700'>
-            Score: <span className='font-semibold'>{score}</span> / {total}
-          </div>
+    <div className='min-h-screen bg-gradient-to-b from-white to-gray-50 px-4 py-10'>
+      <div className='mx-auto max-w-2xl'>
+        <div className='rounded-3xl border bg-white p-6 shadow-sm'>
+          <ResultHeader title={title} />
+          <ResultStats score={score} total={total} percentage={percentage} />
+          <ProgressBar percentage={percentage} />
+          <ResultMessage percentage={percentage} />
+          <ResultActions onBackAction={onBackAction} />
         </div>
-
-        <button
-          className='px-4 py-2 rounded-lg border hover:bg-gray-50'
-          onClick={onBackAction}
-        >
-          Back to Home
-        </button>
       </div>
     </div>
   );

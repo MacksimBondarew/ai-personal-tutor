@@ -8,7 +8,7 @@ import homeImage from '@/src/public/monstera-home.jpg';
 const Home = () => {
   const router = useRouter();
   return (
-    <div className={'grid grid-cols-2 h-screen'}>
+    <div className={'grid lg:grid-cols-2 h-screen'}>
       <div className={'flex justify-center items-center'}>
         <div className={'max-w-2/4'}>
           <h1 className={'text-5xl mb-7'}>
@@ -22,7 +22,11 @@ const Home = () => {
           <Button onClick={() => router.push('/upload')}>Start Learning</Button>
         </div>
       </div>
-      <Image className={'h-screen w-full'} src={homeImage} alt={'monstera'} />
+      <Image
+        className={'h-screen w-full hidden lg:block'}
+        src={homeImage}
+        alt={'monstera'}
+      />
     </div>
   );
 };
