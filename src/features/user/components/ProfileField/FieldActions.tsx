@@ -11,7 +11,7 @@ export function FieldActions({
     <div className='flex gap-2'>
       <button
         onClick={onSave}
-        className='flex items-center gap-1 px-3 py-2 bg-black text-white rounded-lg'
+        className='flex items-center gap-1 px-3 py-2 bg-black text-white rounded-lg cursor-pointer'
       >
         <Check className='w-4 h-4' />
         Save
@@ -19,7 +19,7 @@ export function FieldActions({
 
       <button
         onClick={onCancel}
-        className='flex items-center gap-1 px-3 py-2 border rounded-lg'
+        className='flex items-center gap-1 px-3 py-2 border rounded-lg cursor-pointer'
       >
         <X className='w-4 h-4' />
         Cancel

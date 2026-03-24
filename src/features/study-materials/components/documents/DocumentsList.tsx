@@ -19,7 +19,7 @@ export function DocumentsList() {
   }
 
   return (
-    <div className='md:max-h-[88vh] md:overflow-y-auto md:pr-2'>
+    <div className='md:max-h-[76vh] md:overflow-y-auto md:pr-2'>
       <ul className='flex flex-col gap-3'>
         {data.map((doc) => (
           <DocumentItem key={doc.id} document={doc} />
