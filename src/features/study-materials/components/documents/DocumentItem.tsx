@@ -5,10 +5,13 @@ import { useGenerateStudySet } from '@/src/features/study-materials/hooks/useGen
 import { DocumentStatus } from '@/src/features/study-materials/components/documents';
 import { Document } from '@/src/shared/types';
 import { Button } from '@/src/shared/components/ui';
+import { useCreateConversation } from '@/src/features/chat/hooks';
 
 export function DocumentItem({ document }: { document: Document }) {
   const router = useRouter();
   const { generateStudySet, isLoadingGenerateStudySet } = useGenerateStudySet();
+  const { createConversation, isCreatingConversation } =
+    useCreateConversation();
 
   const isGenerateAction =
     document.status === 'uploaded' || document.status === 'failed';
@@ -46,16 +49,26 @@ export function DocumentItem({ document }: { document: Document }) {
               {isLoadingGenerateStudySet ? 'Generating…' : 'Generate quiz'}
             </Button>
           ) : (
-            <Button
-              className='justify-center gap-1 group sm:w-[124px]'
-              variant='link'
-              onClick={() => router.push(`/quiz/${document.last_study_set_id}`)}
-            >
-              Open quiz
-              <span className='transition-transform duration-200 group-hover:translate-x-0.5 group-hover:scale-130'>
-                →
-              </span>
-            </Button>
+            <>
+              <Button
+                className='justify-center gap-1 group sm:w-[124px]'
+                variant='link'
+                onClick={() =>
+                  router.push(`/quiz/${document.last_study_set_id}`)
+                }
+              >
+                Open quiz
+              </Button>
+
+              <Button
+                className='justify-center sm:w-[124px]'
+                variant='link'
+                disabled={isCreatingConversation}
+                onClick={async () => await createConversation(document.id)}
+              >
+                {isCreatingConversation ? 'Opening…' : 'Chat PDF'}
+              </Button>
+            </>
           )}
         </div>
       </div>
