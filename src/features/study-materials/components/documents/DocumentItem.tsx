@@ -35,7 +35,7 @@ export function DocumentItem({ document }: { document: Document }) {
         </div>
 
         <div className='flex items-center justify-end gap-3'>
-          <div className='flex justify-center sm:w-[80px]'>
+          <div className='flex justify-center hidden sm:w-[80px] sm:inline'>
             <DocumentStatus status={document.status} />
           </div>
 
