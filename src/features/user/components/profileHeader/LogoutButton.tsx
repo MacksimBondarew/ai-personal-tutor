@@ -1,7 +1,9 @@
 import { Button } from '@/src/shared/components/ui';
 import { LogOutIcon } from 'lucide-react';
+import { useLogoutMutation } from '@/src/features/user/hooks/useLogoutMutation';
 
 export function LogoutButton() {
+  const {} = useLogoutMutation();
   return (
     <Button
       variant='outline'

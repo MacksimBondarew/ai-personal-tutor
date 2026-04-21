@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { EditableProfileField } from '@/src/shared/types';
 import { useProfileMutation } from '@/src/features/user/hooks';
-import { FieldDisplay } from './FieldDisplay';
 import { FieldEditor } from './FieldEditor';
+import { FieldDisplay } from './FieldDisplay';
 
 export function ProfileField({
   title,

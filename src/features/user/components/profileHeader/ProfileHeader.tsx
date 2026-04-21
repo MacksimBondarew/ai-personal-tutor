@@ -1,5 +1,5 @@
-import { UserInfo } from './UserInfo';
-import { LogoutButton } from './LogoutButton';
+import { UserInfo } from '@/src/features/user/components/profileHeader/UserInfo';
+import { LogoutButton } from '@/src/features/user/components/profileHeader/LogoutButton';
 
 export function ProfileHeader({ user, profile }: any) {
   return (

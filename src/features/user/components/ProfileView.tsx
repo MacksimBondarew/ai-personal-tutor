@@ -1,7 +1,7 @@
 'use client';
 
-import { ProfileHeader } from './ProfileHeader/ProfileHeader';
-import { ProfileField } from './ProfileField/ProfileField';
+import { ProfileHeader } from '@/src/features/user/components/profileHeader/ProfileHeader';
+import { ProfileField } from '@/src/features/user/components/profileField/ProfileField';
 import { profileFields } from '@/src/features/user/data';
 import { getProfileFieldValue } from '@/src/shared/lib';
 import type { ProfileType } from '@/src/shared/types';
